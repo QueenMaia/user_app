@@ -1,6 +1,6 @@
-# TODO List App
+# Users List App
 
-TODO List is a Flask web application for keeping track of current and upcoming tasks as well as their deadlines.
+Users List is a Flask web application for keeping track of users as well as thier albums, posts and comments.
 
 ### Built With
 * [Python]()
@@ -31,7 +31,7 @@ To get a local copy up and running follow these simple steps.
 ### Installation
 1. Clone the repo
    ```sh
-   git clone https://github.com/QueenMaia/todolist_app.git
+   git clone https://github.com/QueenMaia/user_app.git
    ```
 2. Install the aforementioned packages
 
