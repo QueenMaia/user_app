@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!-- html for updating tasks -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <style>
+      .column {
+        float: left;
+        width: 20%;
+        padding: 10px;`
+      }
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+      }
+
+      .active, .collapsible:hover {
+        background-color: #555;
+      }
+      .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #image{
+        display:none;
+        width: 300px;
+        height: 200px;
+      }
+    </style>
+</head>
+
+<body>
+
+{% block head %}
+<title>{{ user.name }}'s Detail Page</title>
+{% endblock %}
+
+{% block body %}
+<!-- User's Profile -->
+<div >
+    <h1>{{ user.name }}'s Profile</h1>
+    <div class="row">
+      <div class="column"> Username: {{ user.username }} </div> 
+      <div class="column"> Email: {{ user.email }} </div> 
+    </div>
+    <!-- User's Albums -->
+    <div class="row">
+      <button type="button" class="collapsible">Albums</button>
+      <div class="content">
+        {% for album in album_list %}
+        <ul>
+          <li>
+            <button type="button" onclick="imageShow()">{{ album.title }}</button>
+            <img src="images/walmart2.jpg" id="image"/>
+          </li>
+        </ul>
+        {% endfor %}
+      </div>
+    </div>
+    <hr>
+    <!-- user can add to albums -->
+    <form action="/addalbum/{{ user.id }}" method="post">
+        <div>
+            <label>Add To Albums List</label>
+            <br>
+            <input type="text" name="title" placeholder="Enter Album's title...">
+            <button type="submit">Add</button>
+        </div>
+    </form>
+    <!-- User's Posts -->
+    <div class="row">
+      <button type="button" class="collapsible">Posts</button>
+      <div class="content">
+        {% for post in post_list %}
+        <div class="row">
+        <form class="" action="/delete/{{ user.id }}" method="post" id = "delete">
+          <p> 
+              <div class="column"> {{ post.title }}</div> 
+              <div class="column"> <button type="button" value="{{ post.id }}" id="deletebox"
+                name="deletebox" onclick="document.getElementById('delete').submit()"> Delete Post </div>
+              <div class="column"> <a href="/update/{{ user.id }}"> Update Post</a> </div>
+          </p>
+        </form>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <hr>
+    <!-- user can add to posts -->
+    <form action="/addpost/{{ user.id }}" method="post">
+      <div>
+          <label>Add To Posts</label>
+          <br>
+          <input type="text" name="title" placeholder="Enter Post's title...">
+          <button type="submit">Add</button>
+      </div>
+    </form>
+</div>
+<div>
+  <h4><a href="/">Back to Users List</a></h4>
+</div>
+
+{% endblock %}
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+  const imageShow = () => {
+    document.getElementById("image").style.display ='block'
+  }
+</script>
+</body>
+
+</html>

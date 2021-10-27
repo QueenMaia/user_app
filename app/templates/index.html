@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!-- html page for the home page of the web app -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <style>
+      .column {
+        float: left;
+        width: 20%;
+        padding: 60px;
+      }
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        padding-left: 5%;
+      }
+
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 150px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 150%;
+        left: 50%;
+        margin-left: -45px;
+      }
+
+      .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+      }
+    </style>
+</head>
+
+<body>
+
+    <h1>User List:</h1>
+
+    {% for user in user_list %}
+
+    <!-- list of users added by the user -->
+    <div class="row">
+      <form class="" action="/deleteuser/{{ user.id }}" method="post" id = "delete">
+        <div class="column"><div class="tooltip"><a href="/userprofile/{{ user.id }}">{{ user.name }}</a>
+              <span class="tooltiptext">Username: {{ user.username }}, Email: {{ user.email }}</span>
+            </div> </div>
+            <div class="column"> <button type="button" value="{{ user.id }}" id="deletebox"
+              name="deletebox" onclick="document.getElementById('delete').submit()"> Delete User </div>
+      </form>
+    
+    </div>
+    <!-- form that takes in a name, username and email for each user -->
+    {% endfor %}
+    <hr>
+    <form action="/add" method="post">
+        <div>
+            <label>Add To User List</label>
+            <br>
+            <input type="text" name="name" placeholder="Enter User's name...">
+            <input type="text" name="username" placeholder="Add username...">
+            <input type="text" name="email" placeholder="Add email...">
+            <button type="submit">Add User to Users List</button>
+        </div>
+    </form>
+
+</body>
+
+</html>
